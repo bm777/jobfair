@@ -5,8 +5,8 @@ const jobSchema = new Schema({
     title: String,
     description: String,
     location: String,
-    skillId, Number,
-    contractId, Number
+    contractId: String,
+    skillId: String
 })
 
 module.exports = mongoose.model("Job", jobSchema)
