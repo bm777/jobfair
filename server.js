@@ -7,6 +7,7 @@ const graphqlHTTP = require("express-graphql")
 const Skill = require("./models/skill")
 const Job = require("./models/job")
 const Contract = require("./models/contract")
+const Company = require("./models/company")
 
 
 
