@@ -229,8 +229,8 @@ const Mutation = new GraphQLObjectType({
                     skillId: args.skillId,
                     companyId: args.companyId
                 }
-                let job = new Job.findOneAndUpdate(filter, update)
-                return  job.save()
+                let job = Job.findOneAndUpdate(filter, update)
+                return  job
             }
         },
         deleteJob:{
@@ -242,8 +242,8 @@ const Mutation = new GraphQLObjectType({
                 const filter = {
                     _id: args.id
                 }
-                let job = new Job.findOneAndDelete(filter)
-                return  job.save()
+                let job = Job.findOneAndDelete(filter)
+                return  job
             }
         },
         addCompany:{
