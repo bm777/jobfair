@@ -101,10 +101,10 @@ const RootQuery = new GraphQLObjectType({
             type: new GraphQLList(JobType),
             args: {title: {type: GraphQLString}},
             resolve(parent, args){
-                let tmp = Job.find({title: args.title}, (err, docs) =>{
-                    console.log(docs)
-                    if (err) return err
-                })
+                // let tmp = Job.find({title: args.title}, (err, docs) =>{
+                //     // console.log(docs)
+                //     if (err) return err
+                // })
                 return Job.find({title: args.title})
             }
         },
@@ -112,13 +112,39 @@ const RootQuery = new GraphQLObjectType({
             type: new GraphQLList(JobType),
             args: {contract: {type: GraphQLString}},
             resolve(parent, args){
+                return Job.find({contractId: args.contract})
+            }
+        },
+        jobsBySkill: {
+            type: new GraphQLList(JobType),
+            args: {skill: {type: GraphQLString}},
+            resolve(parent, args){
+                return Job.find({skillId: args.skill})
+            }
+        },
+        jobsByLocation: {
+            type: new GraphQLList(JobType),
+            args: {location: {type: GraphQLString}},
+            resolve(parent, args){
+                return Job.find({location: args.location})
+            }
+        },
+        jobsByMarket: {
+            type: new GraphQLList(JobType),
+            args: {
+                market: {type: GraphQLString}
+            },
+            resolve(parent, args){
+                let tmp_market = Company.findOne({market: args.market})
 
-                let tmp_contract = Contract.find({name: args.contract}, (err, docs) =>{
-                    console.log(docs)
-                    if (err) return err
-                })
-                // console.log(tmp_contract.docs)
-                return Job.find({contractID: tmp_contract})
+                 return Job.find({companyId: tmp_market.id})
+            }
+        },
+        jobsByCompany: {
+            type: new GraphQLList(JobType),
+            args: {company: {type: GraphQLString}},
+            resolve(parent, args){
+                return Job.find({companyId: args.company})
             }
         },
         // companies
@@ -177,6 +203,46 @@ const Mutation = new GraphQLObjectType({
                     skillId: args.skillId,
                     companyId: args.companyId
                 })
+                return  job.save()
+            }
+        },
+        updateJob:{
+            type: JobType,
+            args:{
+                id: {type: GraphQLID},
+                title: {type: GraphQLString},
+                description: {type: GraphQLString},
+                location: {type: GraphQLString},
+                contractId: {type: GraphQLID},
+                skillId: {type: GraphQLID},
+                companyId: {type: GraphQLString}
+            },
+            resolve(parent, args){
+                const filter = {
+                    _id: args.id
+                }
+                const update = {
+                    title: args.title,
+                    description: args.description,
+                    location: args.location,
+                    contractId: args.contractId,
+                    skillId: args.skillId,
+                    companyId: args.companyId
+                }
+                let job = new Job.findOneAndUpdate(filter, update)
+                return  job.save()
+            }
+        },
+        deleteJob:{
+            type: JobType,
+            args:{
+                id: {type: GraphQLID}
+            },
+            resolve(parent, args){
+                const filter = {
+                    _id: args.id
+                }
+                let job = new Job.findOneAndDelete(filter)
                 return  job.save()
             }
         },
