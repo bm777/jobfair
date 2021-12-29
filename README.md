@@ -15,7 +15,7 @@ npm i express nodemon express-graphql grphql mongoose
 nodemon server.js
 ```
 
-# Endpoints: graphql queries
+# Endpoints: graphql queries: (http://localhost:3000/graphql)
 
 - create job: addJob
 ```
