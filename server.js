@@ -12,7 +12,7 @@ const Company = require("./models/company")
 
 
 // connect tp mblab db
-mongoose.connect("mongodb+srv://bm777:Passw0rd777@gql-db.8svk1.mongodb.net/myFirstDatabase?retryWrites=true&w=majority")
+mongoose.connect("mongodb+srv://???:????@xxxx.mongodb.net/????retryWrites=?&w=?")
 mongoose.connection.once("open", () => {
     console.log("connected to db")
 })
